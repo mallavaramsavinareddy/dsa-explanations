@@ -1,1 +1,93 @@
-## maximum subarray
+## Maximum Subarray Problem (LeetCode)
+## Problem Statement
+
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum, and return that sum.
+
+Example:
+
+Input:  nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6
+
+
+We don’t need to check all subarrays (that’s brute force and slow).
+Instead, 
+
+At every index, ask:
+
+Should I start a new subarray here?
+Or extend the previous subarray?
+Intuition
+
+If the current sum becomes negative, it will only hurt future sums.
+
+So:
+
+If sum < 0 → reset it
+Otherwise → keep adding
+Algorithm Steps
+Initialize:
+maxSum = nums[0]
+currentSum = 0
+Traverse the array:
+Add current element to currentSum
+Update maxSum
+If currentSum < 0, reset to 0
+
+## Java Code
+class Solution {
+
+    public int maxSubArray(int[] nums) {
+
+        int maxSum = nums[0];
+
+        int currentSum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+
+            currentSum += nums[i];
+
+            if (currentSum > maxSum) {
+
+                maxSum = currentSum;
+            }
+
+            if (currentSum < 0) {
+
+                currentSum = 0;
+            }
+        }
+
+        return maxSum;
+    }
+}
+
+## Dry Run (Important for Interviews)
+
+Array:
+
+[-2,1,-3,4,-1,2,1,-5,4]
+nums[i]	currentSum	maxSum
+-2	       -2 →         reset	-2
+1	          1             	1
+-3	       -2             → reset	1
+4	          4	               4
+-1          3               	4
+2  	        5   	            5
+1  	        6                 6 
+## Complexity
+Time: O(n) (single pass)
+
+Space: O(1) (no extra memory)
+
+If all numbers are negative:
+
+nums = [-3, -2, -1]
+
+Answer = -1 (largest single element)
+
+"At each step, we decide whether to continue the existing subarray or start a new one. If the running sum becomes negative, it is discarded because it cannot contribute to a maximum sum in the future."
+
+ 
+
+ 
