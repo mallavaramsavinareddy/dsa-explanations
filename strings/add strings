@@ -1,0 +1,82 @@
+leetcode problem-415
+## Problem Statement
+
+Given two non-negative integers num1 and num2 represented as strings, return their sum as a string.
+
+You cannot use built-in big integer libraries.
+You must handle large numbers manually.
+
+
+Intuition
+
+We simulate how we do addition on paper:
+
+Start from the rightmost digit
+Add digits one by one
+Keep track of carry
+Build result in reverse and finally reverse it
+
+## Approach
+Initialize two pointers:
+i = num1.length() - 1
+j = num2.length() - 1
+Initialize:
+carry = 0
+StringBuilder result
+Loop while:
+i >= 0 OR j >= 0 OR carry != 0
+Extract digits:
+If index is valid → take digit
+Else → take 0
+Compute:
+sum = d1 + d2 + carry
+Store:
+Append (sum % 10) to result
+Update carry = sum / 10
+Move pointers:
+i--, j--
+Reverse result and return
+
+## Code (Java)
+class Solution {
+    public String addStrings(String num1, String num2) {
+        
+        int i = num1.length() - 1;
+        int j = num2.length() - 1;
+        int carry = 0;
+
+        StringBuilder result = new StringBuilder();
+
+        while (i >= 0 || j >= 0 || carry != 0) {
+            
+            int d1 = (i >= 0) ? num1.charAt(i) - '0' : 0;
+            int d2 = (j >= 0) ? num2.charAt(j) - '0' : 0;
+
+            int sum = d1 + d2 + carry;
+
+            result.append(sum % 10);
+            carry = sum / 10;
+
+            i--;
+            j--;
+        }
+
+        return result.reverse().toString();
+    }
+}
+Example
+Input:
+num1 = "123"
+num2 = "45"
+
+Step-by-step:
+3 + 5 = 8
+2 + 4 = 6
+1 + 0 = 1
+
+Output:
+"168"
+## Complexity Analysis
+Type	Complexity
+Time	O(max(n, m))
+Space	O(max(n, m))
